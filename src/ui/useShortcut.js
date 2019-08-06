@@ -10,6 +10,7 @@ function isLikeInput(tagName) {
 
 const aliasMap = {
 	ctr: ['ControlLeft', 'ControlRight'],
+	ctrl: ['ControlLeft', 'ControlRight'],
 	win: ['MetaLeft', 'MetaRight'],
 	meta: ['MetaLeft', 'MetaRight'],
 	alt: ['AltLeft', 'AltRight'],
@@ -52,8 +53,11 @@ Object.keys(aliasMap).forEach(function (key) {
 // find
 function isMatch(aliasName, codeName) {
 	codeName = codeName.toLowerCase();
-	if (aliasMap[aliasName] && ~(ensureArray(aliasMap[aliasName]).indexOf(codeName))) {
-		return true;
+	if (aliasMap[aliasName]) {
+		const targetArr = ensureArray(aliasMap[aliasName]).map(function (val) {
+			return val.toLowerCase();
+		});
+		return ~targetArr.indexOf(codeName);
 	} else {
 		if (aliasName === codeName) {
 			return true;
@@ -71,14 +75,15 @@ function isMatch(aliasName, codeName) {
 }
 
 
-export default function (keyShortString = '', callback = noop) {
-	const ref = useRef(0);
-
+export default function (keyShortString = '', callback = noop, opts = {}) {
 	const keys = keyShortString.replace(/\s/ig, '')
 		.split('+')
 		.filter(function (a) {
 			return !!a;
 		}) || [];
+
+	const {target} = opts;
+	const ref = useRef(0);
 
 	useEvent('keydown', (e) => {
 		const tagName = e.target.tagName;
@@ -98,7 +103,7 @@ export default function (keyShortString = '', callback = noop) {
 				callback();
 			}
 		}
-	});
+	}, target);
 
 	useEvent('keyup', (e) => {
 		const tagName = e.target.tagName;

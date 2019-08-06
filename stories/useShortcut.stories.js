@@ -2,16 +2,20 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import {Button} from 'antd';
-import useMountState from "../src/react/useMountState";
-import useKeyShort from "../src/ui/useKeyShort";
+import useShortcut from "../src/ui/useShortcut";
 
 
 function Demo() {
-	setTimeout(() => {
-		action('mounted state')(isMounted());
-	}, 1000);
+	useShortcut('ctrl+s', function () {
+		console.log('run ');
+		action('run shortcut ctrl+s')()
+	});
 
-	action('mounted state')(isMounted());
+	useShortcut('ctrl+e', function () {
+		console.log('run s');
+		action('run shortcut ctrl+e')()
+	});
+
 	return (
 		<Button>
 			Button
@@ -20,7 +24,5 @@ function Demo() {
 }
 
 
-
-storiesOf('useMountState', module)
-	.add('use callback', () => <Demo/>)
-	.add('use state', () => <DemoState/>);
+storiesOf('useShortcut', module)
+	.add('use state', () => <Demo/>);
