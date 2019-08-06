@@ -1,11 +1,15 @@
-/**
- *
- * useSetState:
- * 1. merge state
- * 2. support function: function(previous){
- *   return previous + 1
- * }
- *
- *
- *
- **/
+import {useState} from 'react';
+
+export default function useSetState(initialState) {
+	const [state, set] = useState(initialState);
+
+	return [state, (patch) => {
+		return set((previous) => {
+			return {
+				...state,
+				...previous,
+				...(patch ? patch(previous) : {})
+			};
+		});
+	}];
+}
