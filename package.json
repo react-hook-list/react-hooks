@@ -1,0 +1,26 @@
+{
+  "name": "react-rxjs-hook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/YouHan26/react-rxjs-hook.git",
+  "author": "youhan26 <youhan26@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.8.x"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-links": "^5.1.10",
+    "@storybook/addons": "^5.1.10",
+    "@storybook/react": "^5.1.10",
+    "antd": "^3.21.2",
+    "babel-loader": "^8.0.6",
+    "react": "^16.8.6"
+  },
+  "dependencies": {},
+  "scripts": {
+    "s": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  }
+}
