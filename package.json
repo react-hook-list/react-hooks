@@ -1,8 +1,8 @@
 {
-  "name": "react-rxjs-hook",
+  "name": "react-hooks",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/YouHan26/react-rxjs-hook.git",
+  "repository": "https://github.com/react-hook-list/react-hooks.git",
   "author": "youhan26 <youhan26@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
