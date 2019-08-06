@@ -1,12 +1,42 @@
-import {useState, useEffect} from 'react';
+import {BehaviorSubject} from 'rxjs';
+import {useState, useEffect, useMemo} from 'react';
 
-export default function useObservable(observable$, initialValue) {
-	const [value, updater] = useState(initialValue);
+export function useObservable(inputFactory, initialState, inputs) {
+	const [state, setState] = useState(typeof initialState !== 'undefined' ? initialState : null);
 
-	useEffect(function () {
-		const s = observable$.subscribe(updater);
-		return () => s.unsubscribe();
-	}, [observable$]);
+	const {state$, inputs$} = useMemo(() => {
+		const stateSubject$ = new BehaviorSubject(initialState);
+		const inputSubject$ = new BehaviorSubject(inputs);
 
-	return value;
+		return {
+			state$: stateSubject$,
+			inputs$: inputSubject$,
+		};
+	}, []);
+
+	useEffect(() => {
+		inputs$.next(inputs);
+	}, inputs || []);
+
+	useEffect(() => {
+			let output$;
+			if (inputs) {
+				output$ = inputFactory(inputs$, state$);
+			} else {
+				output$ = inputFactory(state$);
+			}
+			const subscription = output$.subscribe((value) => {
+				state$.next(value);
+				setState(value);
+			});
+			return () => {
+				subscription.unsubscribe();
+				inputs$.complete();
+				state$.complete();
+			};
+		},
+		[], // immutable forever
+	);
+
+	return state;
 }

@@ -6,7 +6,8 @@
   "author": "youhan26 <youhan26@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.8.x"
+    "react": "^16.8.x",
+    "rxjs": "^6.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -16,7 +17,8 @@
     "@storybook/react": "^5.1.10",
     "antd": "^3.21.2",
     "babel-loader": "^8.0.6",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "rxjs": "^6.x.x"
   },
   "dependencies": {},
   "scripts": {
